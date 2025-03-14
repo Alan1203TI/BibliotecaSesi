@@ -62,6 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Atualiza as avaliações ao carregar
             atualizarAvaliacoes(livro.id);
+
+            div.querySelector('.book-cover').addEventListener('click', () => {
+                const resumoContainer = document.getElementById('resumo-container');
+                resumoContainer.style.display = 'flex';
+                document.getElementById('resumo-capa').src = livro.capa;
+                document.getElementById('resumo-sinopse').textContent = livro.resumo;
+
+                // Adiciona evento ao botão de voltar
+                const voltarButton = document.getElementById('voltar-resumo');
+                voltarButton.addEventListener('click', () => {
+                    resumoContainer.style.display = 'none';
+                    exibirLivros(livros); // Retorna à lista de livros
+                });
+            });
         });
     }
 
