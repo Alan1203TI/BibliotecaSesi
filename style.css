@@ -188,6 +188,8 @@ select {
 
 /* style.css */
 
+/* style.css */
+
 /* Estilos gerais para botões */
 .btn {
     padding: 10px 20px;
@@ -228,5 +230,5 @@ select {
 /* Estilos para o contêiner dos botões de autenticação */
 .auth-buttons {
     display: flex;
-    gap: 10px;
+    gap: 10px; /* Adiciona espaço entre os botões */
 }
