@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const database = firebase.database();
 
     const googleLoginButton = document.getElementById('google-login-button');
     const logoutButton = document.getElementById('logout-button');
@@ -56,6 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function atualizarAvaliacoes(bookId) {
+        const ratingsRef = database.ref(`ratings/${bookId}`);
+        ratingsRef.once('value', snapshot => {
+            const ratings = snapshot.val();
+            if (ratings) {
+                const total = Object.values(ratings).reduce((acc, rating) => acc + rating, 0);
+                const count = Object.keys(ratings).length;
+                const average = total / count;
+                const averageRatingElem = document.getElementById(`average-rating-${bookId}`);
+                averageRatingElem.textContent = `Avaliação Média: ${average.toFixed(1)} estrelas`;
+            }
+        });
+    }
+
     function exibirLivros(filtrados) {
         if (!mainContent) return;
         mainContent.innerHTML = '';
@@ -68,8 +83,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${livro.capa}" alt="Capa do Livro" class="book-cover">
                 <div class="location">Prateleira: ${livro.prateleira}</div>
                 <div class="resumo" style="display: none;">${livro.resumo}</div>
+                <div class="rating" data-book-id="${livro.id}">
+                    ${[...Array(5)].map((_, i) => `<span class="star" data-value="${i + 1}">&#9733;</span>`).join('')}
+                </div>
+                <div class="average-rating" id="average-rating-${livro.id}"></div>
             `;
             mainContent.appendChild(div);
+
+            const ratingStars = div.querySelectorAll('.star');
+            ratingStars.forEach(star => {
+                star.addEventListener('click', (e) => {
+                    if (auth.currentUser) {
+                        const bookId = e.target.parentNode.getAttribute('data-book-id');
+                        const rating = e.target.getAttribute('data-value');
+                        database.ref(`ratings/${bookId}/${auth.currentUser.uid}`).set(parseInt(rating))
+                            .then(() => {
+                                atualizarAvaliacoes(bookId);
+                                alert('Avaliação registrada com sucesso!');
+                            })
+                            .catch(error => {
+                                console.error('Erro ao registrar avaliação:', error);
+                                alert('Erro ao registrar avaliação: ' + error.message);
+                            });
+                    } else {
+                        alert('Você precisa estar logado para avaliar.');
+                    }
+                });
+            });
+
+            atualizarAvaliacoes(livro.id);
 
             div.querySelector('.book-cover').addEventListener('click', () => {
                 mainContent.innerHTML = '';
@@ -81,6 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${livro.capa}" alt="Capa do Livro" class="book-cover">
                     <div class="location">Prateleira: ${livro.prateleira}</div>
                     <div class="resumo">${livro.resumo}</div>
+                    <div class="rating" data-book-id="${livro.id}">
+                        ${[...Array(5)].map((_, i) => `<span class="star" data-value="${i + 1}">&#9733;</span>`).join('')}
+                    </div>
+                    <div class="average-rating" id="average-rating-${livro.id}"></div>
                     <button id="voltar">Voltar à lista de livros</button>
                 `;
                 mainContent.appendChild(selectedBook);
@@ -88,6 +134,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('voltar').addEventListener('click', () => {
                     exibirLivros(livros);
                 });
+
+                const selectedBookRatingStars = selectedBook.querySelectorAll('.star');
+                selectedBookRatingStars.forEach(star => {
+                    star.addEventListener('click', (e) => {
+                        if (auth.currentUser) {
+                            const bookId = e.target.parentNode.getAttribute('data-book-id');
+                            const rating = e.target.getAttribute('data-value');
+                            database.ref(`ratings/${bookId}/${auth.currentUser.uid}`).set(parseInt(rating))
+                                .then(() => {
+                                    atualizarAvaliacoes(bookId);
+                                    alert('Avaliação registrada com sucesso!');
+                                })
+                                .catch(error => {
+                                    console.error('Erro ao registrar avaliação:', error);
+                                    alert('Erro ao registrar avaliação: ' + error.message);
+                                });
+                        } else {
+                            alert('Você precisa estar logado para avaliar.');
+                        }
+                    });
+                });
+
+                atualizarAvaliacoes(livro.id);
             });
         });
     }
