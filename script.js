@@ -12,42 +12,53 @@ document.addEventListener('DOMContentLoaded', () => {
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    document.getElementById('google-login-button').addEventListener('click', () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider)
-            .then(result => {
-                alert('Login com Google realizado com sucesso!');
-            })
-            .catch(error => {
-                alert('Erro ao fazer login com Google: ' + error.message);
-            });
-    });
+    const googleLoginButton = document.getElementById('google-login-button');
+    const logoutButton = document.getElementById('logout-button');
+    const authContainer = document.getElementById('auth-container');
+    const mainContent = document.querySelector('main');
 
-    document.getElementById('logout-button').addEventListener('click', () => {
-        auth.signOut()
-            .then(() => {
-                alert('Logout realizado com sucesso!');
-            })
-            .catch(error => {
-                alert('Erro ao fazer logout: ' + error.message);
-            });
-    });
+    if (googleLoginButton) {
+        googleLoginButton.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(result => {
+                    alert('Login com Google realizado com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer login com Google:', error);
+                    alert('Erro ao fazer login com Google: ' + error.message);
+                });
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    alert('Logout realizado com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer logout:', error);
+                    alert('Erro ao fazer logout: ' + error.message);
+                });
+        });
+    }
 
     auth.onAuthStateChanged(user => {
         if (user) {
-            document.getElementById('auth-container').style.display = 'none';
-            document.querySelector('main').style.display = 'block';
-            document.getElementById('logout-button').style.display = 'block';
+            if (authContainer) authContainer.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+            if (logoutButton) logoutButton.style.display = 'block';
         } else {
-            document.getElementById('auth-container').style.display = 'block';
-            document.querySelector('main').style.display = 'none';
-            document.getElementById('logout-button').style.display = 'none';
+            if (authContainer) authContainer.style.display = 'block';
+            if (mainContent) mainContent.style.display = 'none';
+            if (logoutButton) logoutButton.style.display = 'none';
         }
     });
 
     function exibirLivros(filtrados) {
-        const main = document.querySelector('main');
-        main.innerHTML = '';
+        if (!mainContent) return;
+        mainContent.innerHTML = '';
         filtrados.forEach(livro => {
             const div = document.createElement('div');
             div.className = 'book';
@@ -58,10 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="location">Prateleira: ${livro.prateleira}</div>
                 <div class="resumo" style="display: none;">${livro.resumo}</div>
             `;
-            main.appendChild(div);
+            mainContent.appendChild(div);
 
             div.querySelector('.book-cover').addEventListener('click', () => {
-                main.innerHTML = '';
+                mainContent.innerHTML = '';
                 const selectedBook = document.createElement('div');
                 selectedBook.className = 'book';
                 selectedBook.innerHTML = `
@@ -72,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="resumo">${livro.resumo}</div>
                     <button id="voltar">Voltar à lista de livros</button>
                 `;
-                main.appendChild(selectedBook);
+                mainContent.appendChild(selectedBook);
 
                 document.getElementById('voltar').addEventListener('click', () => {
                     exibirLivros(livros);
@@ -113,15 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
         menuAutor.appendChild(option);
     });
 
-    menuTitulo.addEventListener('change', (e) => {
-        console.log(`Título selecionado: ${e.target.value}`);
-        const query = e.target.value;
-        buscarLivros(query, livros);
-    });
+    if (menuTitulo) {
+        menuTitulo.addEventListener('change', (e) => {
+            console.log(`Título selecionado: ${e.target.value}`);
+            const query = e.target.value;
+            buscarLivros(query, livros);
+        });
+    }
 
-    menuAutor.addEventListener('change', (e) => {
-        console.log(`Autor selecionado: ${e.target.value}`);
-        const query = e.target.value;
-        buscarLivros(query, livros);
-    });
+    if (menuAutor) {
+        menuAutor.addEventListener('change', (e) => {
+            console.log(`Autor selecionado: ${e.target.value}`);
+            const query = e.target.value;
+            buscarLivros(query, livros);
+        });
+    }
 });
