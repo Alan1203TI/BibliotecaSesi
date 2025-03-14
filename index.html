@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="livros.js"></script> <!-- Certifique-se de que livros.js define a variável livros -->
-    <script src="script.js" defer></script> <!-- Certifique-se de que script.js é carregado após o DOM -->
+    <script src="livros.js"></script>
+    <script src="script.js" defer></script>
     <title>Biblioteca</title>
 </head>
 <body>
@@ -16,18 +16,15 @@
             <div class="menu-container">
                 <select id="menu-titulo">
                     <option value="">Selecione por Título</option>
-                    <!-- Opções de título serão adicionadas pelo JavaScript -->
                 </select>
                 <select id="menu-autor">
                     <option value="">Selecione por Autor</option>
-                    <!-- Opções de autor serão adicionadas pelo JavaScript -->
                 </select>
                 <p id="informativo">Clique na capa do livro para visualizar a sinopse.</p>
             </div>
         </nav>
     </header>
     <main>
-        <!-- Livros serão adicionados aqui pelo JavaScript -->
     </main>
     <footer>
         <img src="logo.png" alt="Logo da Biblioteca" class="logo">
@@ -39,8 +36,8 @@
         <button id="voltar-resumo">Voltar à lista de livros</button>
     </div>
     <div id="auth-container">
-        <button id="google-login-button">Login com Google</button>
+        <button id="google-login-button" class="btn btn-google">Login com Google</button>
     </div>
-    <button id="logout-button" style="display: none;">Logout</button> <!-- Mova o botão de logout para fora do auth-container -->
+    <button id="logout-button" class="btn btn-logout" style="display: none;">Logout</button>
 </body>
 </html>
