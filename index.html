@@ -21,6 +21,10 @@
                     <option value="">Selecione por Autor</option>
                 </select>
                 <p id="informativo">Clique na capa do livro para visualizar a sinopse.</p>
+                <div class="auth-buttons">
+                    <button id="google-login-button" class="btn btn-google">Login com Google</button>
+                    <button id="logout-button" class="btn btn-logout" style="display: none;">Logout</button>
+                </div>
             </div>
         </nav>
     </header>
@@ -35,9 +39,5 @@
         <div id="resumo-sinopse" class="sinopse"></div>
         <button id="voltar-resumo">Voltar à lista de livros</button>
     </div>
-    <div id="auth-container">
-        <button id="google-login-button" class="btn btn-google">Login com Google</button>
-    </div>
-    <button id="logout-button" class="btn btn-logout" style="display: none;">Logout</button>
 </body>
 </html>
