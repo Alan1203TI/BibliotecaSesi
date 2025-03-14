@@ -3,13 +3,13 @@ body {
     font-family: Coolvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff; /* Cor de fundo desejada */
-    padding-top: 220px; /* Espaçamento suficiente para o cabeçalho */
+    background-color: var(--bg-color); /* Utilizando variável CSS */
+    padding-top: 220px;
 }
 
 @media (max-width: 600px) {
     body {
-        padding-top: 160px; /* Ajusta o espaçamento do cabeçalho em telas menores */
+        padding-top: 160px;
     }
 }
 
@@ -19,24 +19,24 @@ header {
     color: #fff;
     padding: 20px 0;
     display: flex;
-    flex-direction: row; /* Altera para exibir elementos em linha */
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between; /* Distribui o espaço entre os elementos */
-    background-image: url('background.jpg'); /* Adiciona a imagem de fundo ao cabeçalho */
-    background-size: cover; /* Faz a imagem cobrir todo o cabeçalho */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita a repetição da imagem */
+    justify-content: space-between;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: fixed;
     top: 0;
     width: 100%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Certifique-se de que o cabeçalho fique acima de outros elementos */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Ajuste na sombra */
+    z-index: 1000;
 }
 
 @media (max-width: 1000px) {
     header {
-        background-size: contain; /* Ajusta a imagem para conter dentro do cabeçalho em telas menores */
-        padding: 10px 0; /* Reduz o padding em telas menores */
+        background-size: contain;
+        padding: 10px 0;
     }
 }
 
@@ -54,7 +54,7 @@ footer .logo {
     width: 100px;
     height: auto;
     margin-bottom: 10px;
-    border-radius: 50%; /* Define bordas arredondadas, criando um círculo */
+    border-radius: 50%;
 }
 
 /* Estilo do conteúdo principal */
@@ -63,7 +63,7 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
-    margin-top: 60px; /* Reduz a margem superior para aproximar do cabeçalho */
+    margin-top: 60px;
 }
 
 /* Estilo do rodapé */
@@ -81,15 +81,15 @@ footer {
 .book {
     margin: 20px;
     text-align: center;
-    flex: 0 0 calc(33.333% - 40px); /* Adiciona flex para 3 capas por fileira */
-    box-sizing: border-box; /* Inclui padding e border no tamanho total */
+    flex: 0 0 calc(33.333% - 40px);
+    box-sizing: border-box;
 }
 .book img {
     width: 100%;
-    height: 700px; /* Define uma altura fixa */
-    object-fit: cover; /* Ajusta a imagem para cobrir o elemento */
-    border-radius: 15px; /* Adiciona bordas arredondadas às capas dos livros */
-    cursor: pointer; /* Adiciona cursor de ponteiro ao passar o mouse sobre a capa */
+    height: 700px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
 }
 .location,
 .title,
@@ -109,10 +109,10 @@ nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px; /* Ajusta o espaçamento entre os elementos */
+    gap: 10px;
     margin-bottom: 10px;
     position: relative;
-    right: 00px; /* Alinha os menus à direita */
+    right: 00px;
 }
 
 @media (max-width: 600px) {
@@ -124,7 +124,7 @@ nav {
         transform: none;
         width: 80%;
         margin: 0 auto;
-        margin-top: 10px; /* Adiciona margem superior */
+        margin-top: 10px;
     }
 }
 
@@ -133,14 +133,14 @@ select {
     border-radius: 15px;
     border: 1px solid #ccc;
     font-size: 16px;
-    width: 200px; /* Ajusta a largura em telas menores */
-    max-width: 400px; /* Define a largura máxima */
+    width: 200px;
+    max-width: 400px;
 }
 
 /* Estilos responsivos */
 @media (max-width: 600px) {
     body {
-        padding-top: 160px; /* Ajusta o espaçamento do cabeçalho em telas menores */
+        padding-top: 160px;
     }
 
     nav {
@@ -153,21 +153,21 @@ select {
     }
 
     .book {
-        flex: 0 0 100%; /* Adiciona flex para 1 capa por fileira em telas menores */
+        flex: 0 0 100%;
     }
 }
 
 /* Estilo para o contêiner de resumo */
 #resumo-container {
-    display: none; /* Inicialmente oculto */
-    flex-direction: row; /* Define a direção da linha para imagem e sinopse */
-    align-items: flex-start; /* Alinha o conteúdo ao início */
-    justify-content: space-between; /* Distribui o espaço entre a capa e a sinopse */
+    display: none;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
     position: fixed;
-    top: 20px; /* Ajusta a posição superior */
-    right: 10px; /* Posiciona o contêiner de resumo no canto direito da tela */
-    width: 60%; /* Define a largura do contêiner de resumo */
-    height: auto; /* Define a altura automaticamente */
+    top: 20px;
+    right: 10px;
+    width: 60%;
+    height: auto;
     padding: 20px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -175,18 +175,15 @@ select {
 }
 
 #resumo-container img {
-    width: 30%; /* Define a largura da capa como 30% */
-    height: auto; /* Ajusta a altura automaticamente */
-    object-fit: contain; /* Ajusta a imagem para caber no elemento */
-    margin-right: 20px; /* Adiciona espaçamento à direita da capa */
+    width: 30%;
+    height: auto;
+    object-fit: contain;
+    margin-right: 20px;
 }
 
 #resumo-container .sinopse {
-    width: 70%; /* Define a largura da sinopse como 70% */
+    width: 70%;
 }
-/* style.css */
-
-/* style.css */
 
 /* Estilos gerais para botões */
 .btn {
@@ -198,9 +195,13 @@ select {
     transition: background-color 0.3s;
 }
 
-/* Estilos específicos para o botão de login com Google */
+.btn:focus {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
 .btn-google {
-    background-color: #4285F4;
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -208,9 +209,8 @@ select {
     background-color: #357ae8;
 }
 
-/* Estilos específicos para o botão de logout */
 .btn-logout {
-    background-color: #f44336;
+    background-color: var(--secondary-color);
     color: white;
 }
 
@@ -228,54 +228,7 @@ select {
 /* Estilos para o contêiner dos botões de autenticação */
 .auth-buttons {
     display: flex;
-    gap: 10px; /* Adiciona espaço entre os botões */
-}
-
-/* Estilos para o contêiner do rodapé */
-footer .logout
-/* style.css */
-
-/* Estilos gerais para botões */
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-/* Estilos específicos para o botão de login com Google */
-.btn-google {
-    background-color: #4285F4;
-    color: white;
-}
-
-.btn-google:hover {
-    background-color: #357ae8;
-}
-
-/* Estilos específicos para o botão de logout */
-.btn-logout {
-    background-color: #f44336;
-    color: white;
-}
-
-.btn-logout:hover {
-    background-color: #d32f2f;
-}
-
-/* Estilos para o contêiner do cabeçalho */
-.header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Estilos para o contêiner dos botões de autenticação */
-.auth-buttons {
-    display: flex;
-    gap: 10px; /* Adiciona espaço entre os botões */
+    gap: 10px;
 }
 
 /* Estilos para o contêiner do rodapé */
@@ -303,6 +256,3 @@ footer .logout-container {
 .star.filled {
     color: gold;
 }
-
-
-
