@@ -186,6 +186,8 @@ select {
 }
 /* style.css */
 
+/* style.css */
+
 /* Estilos gerais para botões */
 .btn {
     padding: 10px 20px;
@@ -216,3 +218,15 @@ select {
     background-color: #d32f2f;
 }
 
+/* Estilos para o contêiner do cabeçalho */
+.header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilos para o contêiner dos botões de autenticação */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
