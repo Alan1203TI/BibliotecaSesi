@@ -1,45 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM carregado");
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyC7_oviEfQMtGAFHMDEHDpLngyRlMfBv38",
+        authDomain: "biblioteca-sesi-dom-bosco.firebaseapp.com",
+        projectId: "biblioteca-sesi-dom-bosco",
+        storageBucket: "biblioteca-sesi-dom-bosco.firebasestorage.app",
+        messagingSenderId: "524040328540",
+        appId: "1:524040328540:web:4c5e789c73237dd64cdd99",
+        measurementId: "G-GQSKF98EXF"
+    };
 
-    if (!livros || !Array.isArray(livros)) {
-        console.error("A variável 'livros' não está definida ou não é um array.");
-        return;
-    }
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    const main = document.querySelector('main');
-    if (!main) {
-        console.error("O elemento 'main' não foi encontrado.");
-        return;
-    }
-
-    main.innerHTML = '';  // Limpa o conteúdo atual
-
-    const menuTitulo = document.getElementById('menu-titulo');
-    const menuAutor = document.getElementById('menu-autor');
-    if (!menuTitulo || !menuAutor) {
-        console.error("Os elementos 'menu-titulo' ou 'menu-autor' não foram encontrados.");
-        return;
-    }
-
-    const titulos = [...new Set(livros.map(livro => livro.titulo))];
-    const autores = [...new Set(livros.map(livro => livro.autor))];
-
-    titulos.forEach(titulo => {
-        const option = document.createElement('option');
-        option.value = titulo;
-        option.textContent = titulo;
-        menuTitulo.appendChild(option);
+    // Função de registro
+    document.getElementById('register-button').addEventListener('click', () => {
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                alert('Usuário registrado com sucesso!');
+            })
+            .catch(error => {
+                alert('Erro ao registrar: ' + error.message);
+            });
     });
 
-    autores.forEach(autor => {
-        const option = document.createElement('option');
-        option.value = autor;
-        option.textContent = autor;
-        menuAutor.appendChild(option);
+    // Função de login
+    document.getElementById('login-button').addEventListener('click', () => {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        auth.signInWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                alert('Login realizado com sucesso!');
+            })
+            .catch(error => {
+                alert('Erro ao fazer login: ' + error.message);
+            });
+    });
+
+    // Função de login com Google
+    document.getElementById('google-login-button').addEventListener('click', () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+            .then(result => {
+                alert('Login com Google realizado com sucesso!');
+            })
+            .catch(error => {
+                alert('Erro ao fazer login com Google: ' + error.message);
+            });
+    });
+
+    // Verificar estado de autenticação
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // Usuário está logado
+            document.getElementById('auth-container').style.display = 'none';
+            document.querySelector('main').style.display = 'block';
+        } else {
+            // Usuário não está logado
+            document.getElementById('auth-container').style.display = 'block';
+            document.querySelector('main').style.display = 'none';
+        }
     });
 
     // Função para exibir livros
     function exibirLivros(filtrados) {
+        const main = document.querySelector('main');
         main.innerHTML = '';  // Limpa o conteúdo atual
         filtrados.forEach(livro => {
             const div = document.createElement('div');
@@ -87,6 +115,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Exibir livros inicialmente
     exibirLivros(livros);
+
+    const menuTitulo = document.getElementById('menu-titulo');
+    const menuAutor = document.getElementById('menu-autor');
+
+    const titulos = [...new Set(livros.map(livro => livro.titulo))];
+    const autores = [...new Set(livros.map(livro => livro.autor))];
+
+    titulos.forEach(titulo => {
+        const option = document.createElement('option');
+        option.value = titulo;
+        option.textContent = titulo;
+        menuTitulo.appendChild(option);
+    });
+
+    autores.forEach(autor => {
+        const option = document.createElement('option');
+        option.value = autor;
+        option.textContent = autor;
+        menuAutor.appendChild(option);
+    });
 
     menuTitulo.addEventListener('change', (e) => {
         console.log(`Título selecionado: ${e.target.value}`);
