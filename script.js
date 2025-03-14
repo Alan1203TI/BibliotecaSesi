@@ -52,16 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
+    // Função de logout
+    document.getElementById('logout-button').addEventListener('click', () => {
+        auth.signOut()
+            .then(() => {
+                alert('Logout realizado com sucesso!');
+            })
+            .catch(error => {
+                alert('Erro ao fazer logout: ' + error.message);
+            });
+    });
+
     // Verificar estado de autenticação
     auth.onAuthStateChanged(user => {
         if (user) {
             // Usuário está logado
             document.getElementById('auth-container').style.display = 'none';
             document.querySelector('main').style.display = 'block';
+            document.getElementById('logout-button').style.display = 'block';
         } else {
             // Usuário não está logado
             document.getElementById('auth-container').style.display = 'block';
             document.querySelector('main').style.display = 'none';
+            document.getElementById('logout-button').style.display = 'none';
         }
     });
 
