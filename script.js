@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         auth.signOut()
             .then(() => {
                 alert('Logout realizado com sucesso!');
-                document.getElementById('logout-button').style.display = 'none';
             })
             .catch(error => {
                 alert('Erro ao fazer logout: ' + error.message);
@@ -150,15 +149,4 @@ document.addEventListener('DOMContentLoaded', () => {
         menuAutor.appendChild(option);
     });
 
-    menuTitulo.addEventListener('change', (e) => {
-        console.log(`Título selecionado: ${e.target.value}`);
-        const query = e.target.value;
-        buscarLivros(query, livros);
-    });
-
-    menuAutor.addEventListener('change', (e) => {
-        console.log(`Autor selecionado: ${e.target.value}`);
-        const query = e.target.value;
-        buscarLivros(query, livros);
-    });
-});
+    menuTitulo.addEventListener('change', (e) =>
