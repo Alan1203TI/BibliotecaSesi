@@ -66,8 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const count = Object.keys(ratings).length;
                 const average = total / count;
                 const averageRatingElem = document.getElementById(`average-rating-${bookId}`);
-                averageRatingElem.textContent = `Avaliação Média: ${average.toFixed(1)} estrelas`;
+                if (averageRatingElem) {
+                    averageRatingElem.textContent = `Avaliação Média: ${average.toFixed(1)} estrelas`;
+                }
             }
+        });
+    }
+
+    function marcarEstrelas(ratingStars, rating) {
+        ratingStars.forEach(star => {
+            star.classList.toggle('filled', star.getAttribute('data-value') <= rating);
         });
     }
 
@@ -98,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const rating = e.target.getAttribute('data-value');
                         database.ref(`ratings/${bookId}/${auth.currentUser.uid}`).set(parseInt(rating))
                             .then(() => {
+                                marcarEstrelas(ratingStars, rating);
                                 atualizarAvaliacoes(bookId);
                                 alert('Avaliação registrada com sucesso!');
                             })
@@ -143,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const rating = e.target.getAttribute('data-value');
                             database.ref(`ratings/${bookId}/${auth.currentUser.uid}`).set(parseInt(rating))
                                 .then(() => {
+                                    marcarEstrelas(selectedBookRatingStars, rating);
                                     atualizarAvaliacoes(bookId);
                                     alert('Avaliação registrada com sucesso!');
                                 })
@@ -163,49 +173,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function buscarLivros(query, livros) {
         console.log(`Busca iniciada com query: ${query}`);
-        const filtrados = livros.filter(livro => {
-            return livro.titulo.toLowerCase().includes(query.toLowerCase()) ||
-                   livro.autor.toLowerCase().includes(query.toLowerCase());
-        });
-        console.log(`Livros encontrados:`, filtrados);
-        exibirLivros(filtrados);
-    }
-
-    exibirLivros(livros);
-
-    const menuTitulo = document.getElementById('menu-titulo');
-    const menuAutor = document.getElementById('menu-autor');
-
-    const titulos = [...new Set(livros.map(livro => livro.titulo))];
-    const autores = [...new Set(livros.map(livro => livro.autor))];
-
-    titulos.forEach(titulo => {
-        const option = document.createElement('option');
-        option.value = titulo;
-        option.textContent = titulo;
-        menuTitulo.appendChild(option);
-    });
-
-    autores.forEach(autor => {
-        const option = document.createElement('option');
-        option.value = autor;
-        option.textContent = autor;
-        menuAutor.appendChild(option);
-    });
-
-    if (menuTitulo) {
-        menuTitulo.addEventListener('change', (e) => {
-            console.log(`Título selecionado: ${e.target.value}`);
-            const query = e.target.value;
-            buscarLivros(query, livros);
-        });
-    }
-
-    if (menuAutor) {
-        menuAutor.addEventListener('change', (e) => {
-            console.log(`Autor selecionado: ${e.target.value}`);
-            const query = e.target.value;
-            buscarLivros(query, livros);
-        });
-    }
-});
+        const filtrados = livros.filter(livro
