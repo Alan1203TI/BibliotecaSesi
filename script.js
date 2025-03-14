@@ -14,32 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Função de registro
-    document.getElementById('register-button').addEventListener('click', () => {
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(userCredential => {
-                alert('Usuário registrado com sucesso!');
-            })
-            .catch(error => {
-                alert('Erro ao registrar: ' + error.message);
-            });
-    });
-
-    // Função de login
-    document.getElementById('login-button').addEventListener('click', () => {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        auth.signInWithEmailAndPassword(email, password)
-            .then(userCredential => {
-                alert('Login realizado com sucesso!');
-            })
-            .catch(error => {
-                alert('Erro ao fazer login: ' + error.message);
-            });
-    });
-
     // Função de login com Google
     document.getElementById('google-login-button').addEventListener('click', () => {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -149,4 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
         menuAutor.appendChild(option);
     });
 
-    menuTitulo.addEventListener('change', (e) =>
+    menuTitulo.addEventListener('change', (e) => {
+        console.log(`Título selecionado: ${e.target.value}`);
+        const query = e.target.value;
+        buscarLivros(query, livros);
+    });
+
+    menuAutor.addEventListener('change', (e) => {
+        console.log(`Autor selecionado: ${e.target.value}`);
+        const query = e.target.value;
+        buscarLivros(query, livros);
+    });
+});
