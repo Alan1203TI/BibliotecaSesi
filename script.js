@@ -18,65 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const authContainer = document.getElementById('auth-container');
     const mainContent = document.querySelector('main');
 
-    if (googleLoginButton) {
-        googleLoginButton.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    alert('Login com Google realizado com sucesso!');
-                })
-                .catch(error => {
-                    console.error('Erro ao fazer login com Google:', error);
-                    alert('Erro ao fazer login com Google: ' + error.message);
-                });
-        });
-    }
-
-    if (logoutButton) {
-        logoutButton.addEventListener('click', () => {
-            auth.signOut()
-                .then(() => {
-                    alert('Logout realizado com sucesso!');
-                })
-                .catch(error => {
-                    console.error('Erro ao fazer logout:', error);
-                    alert('Erro ao fazer logout: ' + error.message);
-                });
-        });
-    }
-
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            if (authContainer) authContainer.style.display = 'none';
-            if (logoutButton) logoutButton.style.display = 'block';
-        } else {
-            if (authContainer) authContainer.style.display = 'block';
-            if (logoutButton) logoutButton.style.display = 'none';
-        }
-    });
-
-    function atualizarAvaliacoes(bookId) {
-        const ratingsRef = database.ref(`ratings/${bookId}`);
-        ratingsRef.once('value', snapshot => {
-            const ratings = snapshot.val();
-            if (ratings) {
-                const total = Object.values(ratings).reduce((acc, rating) => acc + rating, 0);
-                const count = Object.keys(ratings).length;
-                const average = total / count;
-                const averageRatingElem = document.getElementById(`average-rating-${bookId}`);
-                if (averageRatingElem) {
-                    averageRatingElem.textContent = `Avaliação Média: ${average.toFixed(1)} estrelas`;
-                }
-            }
-        });
-    }
-
-    function marcarEstrelas(ratingStars, rating) {
-        ratingStars.forEach(star => {
-            star.classList.toggle('filled', star.getAttribute('data-value') <= rating);
-        });
-    }
-
+    // Função para exibir livros
     function exibirLivros(filtrados) {
         if (!mainContent) return;
         mainContent.innerHTML = '';
@@ -129,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Função para buscar livros
     function buscarLivros(query, livros) {
         console.log(`Busca iniciada com query: ${query}`);
         const filtrados = livros.filter(livro => {
@@ -139,8 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
         exibirLivros(filtrados);
     }
 
+    // Exibir livros ao carregar a página
     exibirLivros(livros);
 
+    // Configurar menus de título e autor
     const menuTitulo = document.getElementById('menu-titulo');
     const menuAutor = document.getElementById('menu-autor');
 
@@ -176,4 +121,66 @@ document.addEventListener('DOMContentLoaded', () => {
             buscarLivros(query, livros);
         });
     }
+
+    // Função para atualizar avaliações
+    function atualizarAvaliacoes(bookId) {
+        const ratingsRef = database.ref(`ratings/${bookId}`);
+        ratingsRef.once('value', snapshot => {
+            const ratings = snapshot.val();
+            if (ratings) {
+                const total = Object.values(ratings).reduce((acc, rating) => acc + rating, 0);
+                const count = Object.keys(ratings).length;
+                const average = total / count;
+                const averageRatingElem = document.getElementById(`average-rating-${bookId}`);
+                if (averageRatingElem) {
+                    averageRatingElem.textContent = `Avaliação Média: ${average.toFixed(1)} estrelas`;
+                }
+            }
+        });
+    }
+
+    // Função para marcar estrelas
+    function marcarEstrelas(ratingStars, rating) {
+        ratingStars.forEach(star => {
+            star.classList.toggle('filled', star.getAttribute('data-value') <= rating);
+        });
+    }
+
+    // Controle de autenticação
+    if (googleLoginButton) {
+        googleLoginButton.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(result => {
+                    alert('Login com Google realizado com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer login com Google:', error);
+                    alert('Erro ao fazer login com Google: ' + error.message);
+                });
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    alert('Logout realizado com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer logout:', error);
+                    alert('Erro ao fazer logout: ' + error.message);
+                });
+        });
+    }
+
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            if (authContainer) authContainer.style.display = 'none';
+            if (logoutButton) logoutButton.style.display = 'block';
+        } else {
+            if (authContainer) authContainer.style.display = 'block';
+            if (logoutButton) logoutButton.style.display = 'none';
+        }
+    });
 });
