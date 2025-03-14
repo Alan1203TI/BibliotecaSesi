@@ -60,14 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
+            // Atualiza as avaliações ao carregar
             atualizarAvaliacoes(livro.id);
-
-            div.querySelector('.book-cover').addEventListener('click', () => {
-                const resumoContainer = document.getElementById('resumo-container');
-                resumoContainer.style.display = 'flex';
-                document.getElementById('resumo-capa').src = livro.capa;
-                document.getElementById('resumo-sinopse').textContent = livro.resumo;
-            });
         });
     }
 
@@ -135,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (averageRatingElem) {
                     averageRatingElem.textContent = `Avaliação Média: ${average.toFixed(1)} estrelas`;
                 }
+                marcarEstrelas(document.querySelectorAll(`.rating[data-book-id="${bookId}"] .star`), average);
             }
         });
     }
