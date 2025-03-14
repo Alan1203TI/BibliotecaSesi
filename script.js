@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Configuração do Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyC7_oviEfQMtGAFHMDEHDpLngyRlMfBv38",
         authDomain: "biblioteca-sesi-dom-bosco.firebaseapp.com",
@@ -10,11 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         measurementId: "G-GQSKF98EXF"
     };
 
-    // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Função de login com Google
     document.getElementById('google-login-button').addEventListener('click', () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
@@ -26,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Função de logout
     document.getElementById('logout-button').addEventListener('click', () => {
         auth.signOut()
             .then(() => {
@@ -37,25 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Verificar estado de autenticação
     auth.onAuthStateChanged(user => {
         if (user) {
-            // Usuário está logado
             document.getElementById('auth-container').style.display = 'none';
             document.querySelector('main').style.display = 'block';
             document.getElementById('logout-button').style.display = 'block';
         } else {
-            // Usuário não está logado
             document.getElementById('auth-container').style.display = 'block';
             document.querySelector('main').style.display = 'none';
             document.getElementById('logout-button').style.display = 'none';
         }
     });
 
-    // Função para exibir livros
     function exibirLivros(filtrados) {
         const main = document.querySelector('main');
-        main.innerHTML = '';  // Limpa o conteúdo atual
+        main.innerHTML = '';
         filtrados.forEach(livro => {
             const div = document.createElement('div');
             div.className = 'book';
@@ -69,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             main.appendChild(div);
 
             div.querySelector('.book-cover').addEventListener('click', () => {
-                main.innerHTML = '';  // Limpa todos os livros
+                main.innerHTML = '';
                 const selectedBook = document.createElement('div');
                 selectedBook.className = 'book';
                 selectedBook.innerHTML = `
@@ -89,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Função para buscar livros
     function buscarLivros(query, livros) {
         console.log(`Busca iniciada com query: ${query}`);
         const filtrados = livros.filter(livro => {
@@ -100,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
         exibirLivros(filtrados);
     }
 
-    // Exibir livros inicialmente
     exibirLivros(livros);
 
     const menuTitulo = document.getElementById('menu-titulo');
