@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         auth.signOut()
             .then(() => {
                 alert('Logout realizado com sucesso!');
+                document.getElementById('logout-button').style.display = 'none';
             })
             .catch(error => {
                 alert('Erro ao fazer logout: ' + error.message);
