@@ -1,4 +1,5 @@
-const livros = [
+console.log("Arquivo livros.js carregado corretamente");
+window.livros = [ 
     {
         titulo: "Cachinhos de Ouro",
         autor: "Recontado por Ana Maria Machado",

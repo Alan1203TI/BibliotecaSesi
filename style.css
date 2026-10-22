@@ -1,16 +1,21 @@
-/* Variáveis de cores */
+/* Variáveis de cores e estilo */
 :root {
-    --primary-color: #4285F4;
-    --secondary-color: #f44336;
-    --bg-color: #f0f8ff;
+    --primary-color: #007acc;
+    --secondary-color: #FF4081;
+    --background-color: #f4f4f4;
+    --text-color: #444444;
+    --card-background: #ffffff;
+    --border-color: #cccccc;
+    --menu-hover-color: #005fa3;
+    --menu-font-family: "Roboto", sans-serif;
 }
 
 /* Estilo do corpo */
 body {
-    font-family: Coolvetica, sans-serif;
+    font-family: var(--menu-font-family);
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color); /* Utilizando variável CSS */
+    background-color: var(--background-color);
     padding-top: 220px;
 }
 
@@ -20,51 +25,119 @@ body {
     }
 }
 
-/* Estilo do cabeçalho */
-header {
-    background-color: #ffffff;
-    color: #fff;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-image: url('background.jpg');
+/* Cabeçalho para a página inicial */
+body.pagina-inicial header {
+    background-image: url('./background-inicial.jpg'); /* Imagem da página inicial */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
     position: fixed;
     top: 0;
     width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Ajuste na sombra */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
-@media (max-width: 1000px) {
-    header {
-        background-size: contain;
-        padding: 10px 0;
+/* Cabeçalho para a página de livros */
+body.pagina-livros header {
+    background-image: url('./background-livros.jpg'); /* Imagem da página de livros */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+nav {
+    margin-top: 150px;
+}
+/* Navegação */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+    justify-content: center; /* Centraliza os itens do menu */
+    background: linear-gradient(135deg, #007acc, #005fa3); /* Gradiente de fundo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    padding: 15px 0; /* Espaçamento interno para o menu */
+    border-radius: 10px; /* Bordas arredondadas para um visual moderno */
+}
+
+/* Estilo para os links do menu */
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 30px; /* Bordas arredondadas nos links */
+    transition: all 0.3s ease; /* Transição suave para hover */
+}
+
+/* Efeito de hover nos links */
+nav ul li a:hover {
+    background: #ffffff; /* Fundo branco ao passar o mouse */
+    color: #005fa3; /* Cor do texto em azul */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar o link */
+    transform: scale(1.05); /* Aumenta levemente o link */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column; /* Alinha os links verticalmente */
+        gap: 15px; /* Espaçamento menor entre os links */
+        padding: 10px; /* Ajusta o espaçamento interno */
+    }
+
+    nav ul li a {
+        font-size: 14px; /* Reduz o tamanho da fonte para telas menores */
     }
 }
 
-/* Estilo do informativo */
-#informativo {
-    color: #fff;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
+/* Estilo específico para os menus da página de livros */
+body.pagina-livros .menu-container {
+    display: flex;
+    flex-direction: column; /* Exibe os menus na vertical */
+    align-items: flex-start; /* Alinha os menus à esquerda */
+    gap: 10px; /* Espaçamento entre os menus */
+    padding-left: 20px; /* Distância da borda esquerda da página */
+    margin-top: 10px; /* Espaço superior para um melhor ajuste visual */
 }
 
-/* Estilo da logo */
-header .logo,
-footer .logo {
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 50%;
+body.pagina-livros #menu-titulo,
+body.pagina-livros #menu-autor {
+    width: 200px; /* Define uma largura fixa para os menus dropdown */
+    font-size: 14px; /* Ajusta o tamanho da fonte para melhor leitura */
+    padding: 10px; /* Espaçamento interno dos menus */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--card-background);
+    color: var(--text-color);
 }
 
-/* Estilo do conteúdo principal */
+body.pagina-livros #menu-titulo:hover,
+body.pagina-livros #menu-autor:hover {
+    background-color: var(--primary-color); /* Cor de destaque no hover */
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Espaçamento e centralização */
 main {
     display: flex;
     flex-wrap: wrap;
@@ -73,193 +146,100 @@ main {
     margin-top: 60px;
 }
 
-/* Estilo do rodapé */
+/* Estilo dos cartões de livros */
+.book {
+    margin: 20px;
+    text-align: center;
+    flex: 0 0 calc(33.333% - 40px);
+    box-sizing: border-box;
+    background-color: var(--card-background);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.book:hover {
+    transform: translateY(-5px);
+}
+
+.book img {
+    width: 100%;
+    height: 700px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.book img:hover {
+    transform: scale(1.02);
+}
+
+/* Rodapé */
 footer {
-    background-color: #301ef5;
+    background-color: var(--primary-color);
     color: #fff;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Estilo das capas dos livros */
-.book {
-    margin: 20px;
-    text-align: center;
-    flex: 0 0 calc(33.333% - 40px); /* Ajusta para 3 capas por linha */
-    box-sizing: border-box;
-}
-.book img {
-    width: 200px;
-    height: 300px; /* Ajusta a altura automaticamente para manter a proporção */
-    object-fit: cover;
-    border-radius: 15px;
-    cursor: pointer;
-}
-.location,
-.title,
-.author,
-.edition {
-    font-size: 16px;
-    color: #555;
-}
-.title {
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 20px;
-}
-
-/* Estilo da navegação */
-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+footer .logo {
+    width: 100px;
+    height: auto;
     margin-bottom: 10px;
-    position: relative;
-    right: 0;
+    border-radius: 50%;
 }
 
-@media (max-width: 600px) {
-    nav {
-        flex-direction: column;
-        top: auto;
-        left: auto;
-        position: static;
-        transform: none;
-        width: 80%;
-        margin: 0 auto;
-        margin-top: 10px;
-    }
-}
-
-select {
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    width: 200px;
-    max-width: 400px;
-}
-
-/* Estilos responsivos */
-@media (max-width: 600px) {
-    body {
-        padding-top: 160px;
-    }
-
-    nav {
-        top: auto;
-        left: auto;
-    }
-
-    .container {
-        flex-direction: column;
-    }
-
-    .book {
-        flex: 0 0 100%; /* Adiciona flex para 1 capa por fileira em telas menores */
-    }
-}
-
-/* Estilo para o contêiner de resumo */
-#resumo-container {
-    display: none;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    position: fixed;
-    top: 20px;
-    right: 10px;
-    width: 60%;
-    height: auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-}
-
-#resumo-container img {
-    width: 30%;
-    height: auto;
-    object-fit: contain;
-    margin-right: 20px;
-}
-
-#resumo-container .sinopse {
-    width: 70%;
-}
-
-/* Estilos gerais para botões */
-.btn {
+/* Botão "Voltar ao Início" */
+#btn-voltar {
+    text-decoration: none;
+    display: inline-block;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn:focus {
-    outline: 2px solid #000;
-    outline-offset: 2px;
-}
-
-.btn-google {
     background-color: var(--primary-color);
-    color: white;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.btn-google:hover {
-    background-color: #357ae8;
-}
-
-.btn-logout {
-    background-color: var(--secondary-color);
-    color: white;
-}
-
-.btn-logout:hover {
-    background-color: #d32f2f;
-}
-
-/* Estilos para o contêiner do cabeçalho */
-.header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Estilos para o contêiner dos botões de autenticação */
-.auth-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-/* Estilos para o contêiner do rodapé */
-footer .logout-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-/* Estilos para as estrelas de avaliação */
-.rating {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-}
-
-.star {
-    font-size: 24px;
+#btn-voltar:hover {
+    background-color: var(--menu-hover-color);
     cursor: pointer;
-    color: gray;
 }
 
-.star.filled {
-    color: gold;
+/* Botão "Voltar à lista de livros" */
+#voltar {
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #007acc, #005fa3);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: none;
+    margin-top: 20px; /* Adicionado espaçamento superior */
+}
+
+#voltar:hover {
+    background: linear-gradient(135deg, #005fa3, #003f6b);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#voltar:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
