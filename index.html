@@ -1,46 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="livros.js"></script>
-    <script src="script.js" defer></script>
-    <title>Biblioteca</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="livros.js"></script> <!-- Carrega os livros primeiro -->
+  <script src="script.js" defer></script> <!-- Carrega o script principal -->
+  <title>Biblioteca Digital</title>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="menu-container">
-                <select id="menu-titulo">
-                    <option value="">Selecione por Título</option>
-                </select>
-                <select id="menu-autor">
-                    <option value="">Selecione por Autor</option>
-                </select>
-                <p id="informativo">Clique na capa do livro para visualizar a sinopse.</p>
-                <div class="auth-buttons">
-                    <button id="google-login-button" class="btn btn-google">Login com Google</button>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <main>
-    </main>
-    <footer>
-        <img src="logo.png" alt="Logo da Biblioteca" class="logo">
-        <p>&copy; 2025 Biblioteca Sesi Dom Bosco - São João del-Rei. Todos os direitos reservados.</p>
-        <div class="logout-container">
-            <button id="logout-button" class="btn btn-logout" style="display: none;">Logout</button>
-        </div>
-    </footer>
-    <div id="resumo-container" style="display: none;">
-        <img id="resumo-capa" src="" alt="Capa do Livro" class="book-cover">
-        <div id="resumo-sinopse" class="sinopse"></div>
-        <button id="voltar-resumo">Voltar à lista de livros</button>
-    </div>
+<body class="pagina-inicial"> <!-- Classe específica para aplicar estilo -->
+  <header>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="livros.html">Livros</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- Nova seção para os Destaques da Semana -->
+    <section class="destaques-semana">
+      <h1>             DESTAQUES DA SEMANA </h1>
+
+      <!-- Livros aparecem logo abaixo do título -->
+      <div id="destaques-container">
+        <!-- Livros em destaque serão renderizados aqui -->
+      </div>
+    </section>
+  </main>
+  <footer>
+    <a href="livros.html" id="btn-voltar">Voltar aos Livros</a>
+    <p>&copy; 2025 Biblioteca Digital. Todos os direitos reservados.</p>
+  </footer>
 </body>
 </html>

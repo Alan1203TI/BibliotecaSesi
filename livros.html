@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="livros.js"></script> <!-- Carrega os dados dos livros -->
+  <script src="script.js" defer></script> <!-- Carrega o script principal -->
+  <title>Livros - Biblioteca Digital</title>
+</head>
+<body class="pagina-livros"> <!-- Classe específica para aplicar estilo -->
+  <header>
+    <nav class="menu-container">
+      <select id="menu-titulo">
+        <option value="">Selecione por Título</option>
+      </select>
+      <select id="menu-autor">
+        <option value="">Selecione por Autor</option>
+      </select>
+      <p id="informativo">Clique na capa do livro para visualizar a sinopse.</p>
+      <a href="index.html" id="btn-voltar">Voltar ao Início</a> <!-- Botão de voltar -->
+    </nav>
+  </header>
+  <main>
+    <!-- Os livros serão renderizados aqui pelo JavaScript -->
+  </main>
+  <footer>
+    <img src="logo.png" alt="Logo da Biblioteca" class="logo">
+    <p>&copy; 2025 Biblioteca Digital. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
